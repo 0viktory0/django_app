@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-app-deployment
+  labels:
+    app  : django-app
+    env  : prod
+    owner: Vi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project: k8s-django
+  template:
+    metadata:
+      labels:
+        project: k8s-django
+    spec:
+      containers:
+        - name: django-app
+          image: vikkiv/django_app:latest
+          imagePullPolicy: Always
+          env:
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: django-app-secret
+                  key: secret_key
+            - name: DEBUG
+              valueFrom:
+                secretKeyRef:
+                  name: django-app-secret
+                  key: debug
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: django-app-secret
+                  key: database_url
+            - name: ALLOWED_HOSTS
+              valueFrom:
+                secretKeyRef:
+                  name: django-app-secret
+                  key: allowed_hosts
+          ports:
+            - containerPort: 80
+              protocol  : TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: django-app-service
+  labels:
+    app: django-app
+    env: prod
+    owner: Vi
+spec:
+  selector:
+    project: k8s-django   
+  type: ClusterIP
+  ports:
+    - name      : app-listener
+      protocol  : TCP
+      port      : 80
+      targetPort: 80
