@@ -70,7 +70,7 @@ kubectl apply -f ingress-django-app.yaml
 
 Запустите команды для настройки базы данных:
 ```sh
-kubectl apply -f django-manage-migrate.yaml<br>
+kubectl apply -f django-manage-migrate.yaml
 kubectl apply -f django-manage-createsuperuser.yaml
 ```
 
@@ -130,6 +130,6 @@ kubectl apply -f django-deployment.yml.
 ```
 Запустите команды для настройки базы данных:
 ```sh
-kubectl apply -f django-manage-migrate.yaml<br>
+kubectl apply -f django-manage-migrate.yaml
 kubectl apply -f django-manage-createsuperuser.yaml
 ```
