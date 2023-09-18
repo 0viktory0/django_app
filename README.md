@@ -93,17 +93,17 @@ echo "$(minikube ip) star-burger.test" | sudo tee -a /etc/hosts
 
 После создания кластера Вам будет предложено сохранить файл конфигурации кластера с названием типа `kubernetes-cluster-1791_kubeconfig.yaml`.
 
-Поместите его у себя на локальной машине в директорию .../.kube/
+Поместите его у себя на локальной машине в директорию `.../.kube/`
 
 Установите kubectl для взаимодействия с кластером
 
-Установите helm для запуска PostgreSQL в кластере: 
+Установите `helm` для запуска PostgreSQL в кластере: 
 ```sh
 helm repo add stable https://charts.helm.sh/stable
 helm repo update
 helm install my-db oci://registry-1.docker.io/bitnamicharts/postgresql
 ```
-Создайте файл secrets.yml со следующим содержанием:
+Создайте файл `secrets.yml` со следующим содержанием:
 
 ```
 apiVersion: v1
