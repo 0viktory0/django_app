@@ -85,3 +85,51 @@ echo "$(minikube ip) star-burger.test" | sudo tee -a /etc/hosts
 ```
 
 Сайт будет доступен по ссылке: http://star-burger.test с вашей локальной машины:
+
+## Как развернуть сайт в Kubernetes
+Пример работающего сайта можно посмотреть по [ссылке](https://star-burger.ru/).
+
+Разверните кластер Kubernetes в облаке, например в [VK CLOUD](https://mcs.mail.ru/)
+
+После создания кластера Вам будет предложено сохранить файл конфигурации кластера с названием типа `kubernetes-cluster-1791_kubeconfig.yaml`.
+
+Поместите его у себя на локальной машине в директорию .../.kube/
+
+Установите kubectl для взаимодействия с кластером
+
+Установите helm для запуска PostgreSQL в кластере: 
+```sh
+helm repo add stable https://charts.helm.sh/stable
+helm repo update
+helm install my-db oci://registry-1.docker.io/bitnamicharts/postgresql
+```
+Создайте файл secrets.yml со следующим содержанием:
+
+```
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ...
+type: Opaque
+stringData:
+  secret_key: "..."
+  debug: "False"
+  database_url: "..."
+  allowed_hosts: "..."
+  superuser_password: "..."
+  superuser_email: "..."
+```
+
+Запустите комманду для создания секрета в кластере:
+```sh
+kubectl apply -f secrets.yml
+```
+Запустите команду для загрузки проекта в кластер:
+```sh
+kubectl apply -f django-deployment.yml.
+```
+Запустите команды для настройки базы данных:
+```sh
+kubectl apply -f django-manage-migrate.yaml<br>
+kubectl apply -f django-manage-createsuperuser.yaml
+```
