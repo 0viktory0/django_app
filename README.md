@@ -87,7 +87,7 @@ echo "$(minikube ip) star-burger.test" | sudo tee -a /etc/hosts
 Сайт будет доступен по ссылке: http://star-burger.test с вашей локальной машины:
 
 ## Как развернуть сайт в Kubernetes
-Пример работающего сайта можно посмотреть по [ссылке](https://star-burger.ru/).
+Пример работающего сайта можно посмотреть по [ссылке](http://star-burger.ru/admin/login/?next=/admin/).
 
 Разверните кластер Kubernetes в облаке, например в [VK CLOUD](https://mcs.mail.ru/)
 
